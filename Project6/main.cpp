@@ -3,14 +3,21 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>//text to font
-#include <SDL_mixer.h>//sound n music
+#include <SDL_mixer.h>//sound and music
 #include <stdlib.h>
 #include <time.h>
+#include <list>
 
+#include "InputHandler.h"
+#include "KeyboardHandler.h"
+#include "StaticImage.h"
+#include "Entity.h"
 using namespace std;
 
+//TODO: Create Vectors class
+
 int main(int argc, char** argv){
-	//srand(time(NULL));
+	srand(time(NULL));
 
 	//initialise SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
@@ -76,7 +83,101 @@ int main(int argc, char** argv){
 	sourceRect.x = 280;
 	sourceRect.y = 103;
 
-	//SDL_QueryTexture(titleLogoTexture, NULL, NULL, &sourceRect.w, &sourceRect.h);
+	SDL_QueryTexture(titleLogoTexture, NULL, NULL, &sourceRect.w, &sourceRect.h);
+	/* sourceRect.w = 280;
+	sourceRect.h = 103; */
 
 	//draw location of the logo
+	SDL_Rect destinationRect;
+	destinationRect.x = 600;
+	destinationRect.y = 800;
+	destinationRect.w = sourceRect.w*2;
+	destinationRect.h = sourceRect.h*2;
+	
+	//Setup initial game entities
+	//list<Entity*> entities;
+
+	StaticImage titleImg(titleLogoTexture, renderer, 280, 103);
+
+	//setup game entities
+	list<Entity*> entities;
+	//point to the list made
+	Entity::enitities = &entities;
+
+
+
+	//setup input and keyboard handling
+	KeyboardHandler keyboardHandler;
+
+	InputHandler* inputHandler = &keyboardHandler;
+
+	//Setup Text
+	TTF_Font* font = TTF_OpenFont("assets/vermin_vibes_1989.ttf", 16);
+	SDL_Color textColour = { 123, 0, 34, 0 };
+	//create surface using font, colour, and message
+	SDL_Surface* textSurface = TTF_RenderText_Blended(font, "Not a RomHack!", textColour);
+	//convert surface to texture
+	SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+	SDL_FreeSurface(textSurface);
+
+	//text destination
+	SDL_Rect textDestination;
+	textDestination.x = 200;
+	textDestination.y = 500; 
+
+	//time management
+	Uint32 lastUpdate = SDL_GetTicks();
+
+	bool loop = true;
+	while (loop){
+		//time management
+		Uint32 timeDiff = SDL_GetTicks() - lastUpdate;
+		//convert milliseconds into fraction of a second
+		float DT = timeDiff / 1000.0;
+		//update since last update
+		lastUpdate = SDL_GetTicks();
+
+		//poll inputs
+		SDL_Event event;
+		//loop check for all accepted inputs
+		while (SDL_PollEvent(&event)){
+			//check if window closed
+			if (event.type == SDL_QUIT){
+				loop = false;
+			}
+			//check for esc key
+			if (event.type == SDL_KEYDOWN){
+				if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE){
+					loop = false;
+				}
+			}
+
+			//update input handler
+			inputHandler->update(&event);
+
+		}
+			keyboardHandler.updateHeldKeys(); //check for held down keys
+
+			//set drawing colour for renderer
+			SDL_SetRenderDrawColor(renderer, 155, 0, 155, 255);
+			//clear screen with draw colour
+			SDL_RenderClear(renderer);
+
+			//render text on top of everything (last)
+			SDL_RenderCopy(renderer, textTexture, NULL, &textDestination);
+
+			//render to the screen
+			SDL_RenderPresent(renderer);			
+	}
+
+	//Clean up
+	SDL_DestroyTexture(textTexture);
+	SDL_DestroyTexture(titleLogoTexture);
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+
+	SDL_Quit();
+
+	return 0;
+
 }
