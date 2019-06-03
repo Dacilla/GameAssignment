@@ -120,6 +120,11 @@ int main(int argc, char** argv){
 
 	InputHandler* inputHandler = &keyboardHandler;
 
+	MouseHandler mouseHandler;
+
+	GameControllerHandler controllerHandler;
+
+
 	//Setup Text
 	TTF_Font* font = TTF_OpenFont("assets/vermin_vibes_1989.ttf", 16);
 	SDL_Color textColour = { 123, 0, 34, 0 };
@@ -163,6 +168,8 @@ int main(int argc, char** argv){
 
 			//update input handler
 			inputHandler->update(&event);
+			mouseHandler.update(&event);
+			controllerHandler.update(&event);
 
 		}
 			keyboardHandler.updateHeldKeys(); //check for held down keys
