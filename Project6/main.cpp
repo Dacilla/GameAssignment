@@ -12,6 +12,17 @@
 #include "KeyboardHandler.h"
 #include "StaticImage.h"
 #include "Entity.h"
+#include "Animation.h"
+#include "CameraManager.h"
+#include "GameControllerHandler.h"
+#include "GameState.h"
+#include "GameStateMachine.h"
+#include "IdleGameState.h"
+#include "IdleGameStates.h"
+#include "MouseHandler.h"
+#include "SoundManager.h"
+#include "Vector.h"
+
 using namespace std;
 
 //TODO: Create Vectors class
@@ -94,8 +105,6 @@ int main(int argc, char** argv){
 	destinationRect.w = sourceRect.w*2;
 	destinationRect.h = sourceRect.h*2;
 	
-	//Setup initial game entities
-	//list<Entity*> entities;
 
 	StaticImage titleImg(titleLogoTexture, renderer, 280, 103);
 
