@@ -74,8 +74,6 @@
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CameraManager.cpp" />
-    <ClCompile Include="ChaseGameState.cpp" />
-    <ClCompile Include="Chaser.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameControllerHandler.cpp" />
     <ClCompile Include="GameState.cpp" />
@@ -88,6 +86,7 @@
     <ClCompile Include="KeyboardHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MouseHandler.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="StaticImage.cpp" />
     <ClCompile Include="Vector.cpp" />
@@ -99,7 +98,6 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="ChaseGameState.h" />
-    <ClInclude Include="Chaser.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameControllerHandler.h" />
     <ClInclude Include="GameState.h" />
@@ -111,6 +109,7 @@
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="KeyboardHandler.h" />
     <ClInclude Include="MouseHandler.h" />
+    <ClInclude Include="Obstacle.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="StaticImage.h" />
     <ClInclude Include="Vector.h" />

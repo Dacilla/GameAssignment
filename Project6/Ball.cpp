@@ -1,4 +1,5 @@
 #include "Ball.h"
+#include "Globals.h"
 
 
 Ball::Ball()

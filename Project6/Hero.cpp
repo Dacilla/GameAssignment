@@ -1,4 +1,5 @@
 #include "Hero.h"
+#include "Globals.h"
 
 
 Hero::Hero()

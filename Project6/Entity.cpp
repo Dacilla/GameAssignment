@@ -45,4 +45,4 @@ void Entity::draw(){
 	//let sub classes deal with this
 }
 
-list<Entity*>* Entity::enitities = NULL;
+std::list<Entity*>* Entity::entities = NULL;

@@ -22,6 +22,8 @@
 #include "MouseHandler.h"
 #include "SoundManager.h"
 #include "Vector.h"
+#include "Hero.h"
+#include "Obstacle.h"
 
 using namespace std;
 
@@ -111,9 +113,24 @@ int main(int argc, char** argv){
 	//setup game entities
 	list<Entity*> entities;
 	//point to the list made
-	Entity::enitities = &entities;
+	Entity::entities = &entities;
 
+	//build a hero
+	Hero* hero = new Hero();
+	hero->setRenderer(renderer);
+	hero->setXY(200, 200);
+	hero->acceleration.x = 200;
 
+	//add to entities list
+	entities.push_back(hero);
+
+	//build obstacles
+	Obstacle* obstacle = new Obstacle();
+	obstacle->setRenderer(renderer);
+	obstacle->setXY(400, 400);
+	obstacle->setWH(20, 20);
+
+	entities.push_back(obstacle);
 
 	//setup input and keyboard handling
 	KeyboardHandler keyboardHandler;

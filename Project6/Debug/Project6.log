@@ -1,24 +1,44 @@
-﻿Build started 13/05/2019 4:33:07 PM.
-     1>Project "C:\Users\alex\Documents\Visual Studio 2013\Projects\GameAssignment\Project6\Project6.vcxproj" on node 2 (Build target(s)).
+﻿Build started 5/06/2019 11:19:12 PM.
+     1>Project "C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameAssignment\Project6\Project6.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Project6.vcxproj).  This can lead to incorrect clean and rebuild behavior.
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp StaticImage.cpp
-         StaticImage.cpp
-     1>c:\users\alex\documents\visual studio 2013\projects\gameassignment\project6\staticimage.cpp(35): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\alex\documents\visual studio 2013\projects\gameassignment\project6\staticimage.cpp(66): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-         main.cpp
-     1>c:\users\alex\documents\visual studio 2013\projects\gameassignment\project6\main.cpp(17): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>c:\users\alex\documents\visual studio 2013\projects\gameassignment\project6\main.cpp(126): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Ball.cpp Bullet.cpp
+         Bullet.cpp
+     1>c:\users\alex\documents\visual studio 2013\projects\gameassignment\project6\bullet.cpp(17): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\alex\documents\visual studio 2013\projects\gameassignment\project6\bullet.cpp(28): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+         Ball.cpp
+     1>c:\users\alex\documents\visual studio 2013\projects\gameassignment\project6\ball.cpp(31): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\alex\documents\visual studio 2013\projects\gameassignment\project6\ball.cpp(36): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\alex\documents\visual studio 2013\projects\gameassignment\project6\ball.cpp(44): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\alex\documents\visual studio 2013\projects\gameassignment\project6\ball.cpp(53): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
          Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\alex\Documents\Visual Studio 2013\Projects\GameAssignment\Debug\GameAssignment.exe" /INCREMENTAL /NOLOGO SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib SDL2_mixer.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\alex\Documents\Visual Studio 2013\Projects\GameAssignment\Debug\GameAssignment.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\alex\Documents\Visual Studio 2013\Projects\GameAssignment\Debug\GameAssignment.lib" /MACHINE:X86 Debug\InputHandler.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameAssignment\Debug\GameAssignment.exe" /INCREMENTAL /NOLOGO SDL2.lib SDL2main.lib SDL2_image.lib SDL2_ttf.lib SDL2_mixer.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameAssignment\Debug\GameAssignment.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameAssignment\Debug\GameAssignment.lib" /MACHINE:X86 Debug\Animation.obj
+         Debug\Ball.obj
+         Debug\Bullet.obj
+         Debug\CameraManager.obj
+         Debug\Entity.obj
+         Debug\GameControllerHandler.obj
+         Debug\GameState.obj
+         Debug\GameStateMachine.obj
+         Debug\Globals.obj
+         Debug\Hero.obj
+         Debug\IdleGameState.obj
+         Debug\IdleGameStates.obj
+         Debug\InputHandler.obj
          Debug\KeyboardHandler.obj
          Debug\main.obj
+         Debug\MouseHandler.obj
+         Debug\Obstacle.obj
+         Debug\SoundManager.obj
          Debug\StaticImage.obj
+         Debug\Vector.obj
+         Debug\Wall.obj
+         LINK : C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameAssignment\Debug\GameAssignment.exe not found or not built by the last incremental link; performing full link
      1>MSVCRTD.lib(cinitexe.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
-         Project6.vcxproj -> C:\Users\alex\Documents\Visual Studio 2013\Projects\GameAssignment\Debug\GameAssignment.exe
-     1>Done Building Project "C:\Users\alex\Documents\Visual Studio 2013\Projects\GameAssignment\Project6\Project6.vcxproj" (Build target(s)).
+         Project6.vcxproj -> C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameAssignment\Debug\GameAssignment.exe
+     1>Done Building Project "C:\Users\Alex\Documents\Visual Studio 2013\Projects\GameAssignment\Project6\Project6.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.20
+Time Elapsed 00:00:02.37

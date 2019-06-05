@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <list>
+#include "Vector.h"
 
 class Entity
 {
@@ -25,6 +26,6 @@ public:
 	virtual void updateMovement(float dt);
 	virtual void draw();
 
-	static list<Entity*> *enitities;
+	static std::list<Entity*> *entities;
 };
 

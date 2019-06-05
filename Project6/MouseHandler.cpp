@@ -12,22 +12,8 @@ MouseHandler::~MouseHandler()
 }
 
 void MouseHandler::update(SDL_Event* event){
-	//check if left click
-	if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT){
-		//check if mouse was clicked over hero
-		if (event->button.x >= hero->position.x && event->button.x <= hero->position.x + 32
-			&& event->button.y >= hero->position.y && event->button.y <= hero->position.y + 32)
-		{
-			leftMouseHeld = true;
-		}
+	//check for left click
+	if ((event->type == SDL_MOUSEBUTTONDOWN) && (event->button.button == SDL_BUTTON_LEFT)){
+		leftMouseHeld = true; // player is allowed to click anywhere on the screen
 	}
-	//check to see if left mouse button was released
-	if (event->type == SDL_MOUSEBUTTONUP && event->button.button == SDL_BUTTON_LEFT){
-		leftMouseHeld = false;
-	}
-	//if left is held down and mouse moved, drag hero around
-	if (leftMouseHeld && event->type == SDL_MOUSEMOTION){
-		hero->setXY(event->motion.x, event->motion.y);
-	}
-
 }

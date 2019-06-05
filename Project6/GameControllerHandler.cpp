@@ -28,63 +28,57 @@ GameControllerHandler::~GameControllerHandler()
 
 
 void GameControllerHandler::update(SDL_Event* event){
-	//if got controller and its not detached
-	if (controller != NULL && SDL_GameControllerGetAttached(controller)){
-		//lets get joystickID from this controller
+	//any face button on the controller will make player jump
+
+	//detects controller and any disconnections
+	if (controller != NULL && SDL_GameControllerGetAttached(controller))
+	{
+		//get joystickID
 		SDL_JoystickID joystickID = SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controller));
 
-		//check if event was from our controller
+		//check for controller event
 		if (event->cdevice.which == joystickID)
 		{
-			//which event?
-			//IF unplugged
-			if (event->type == SDL_CONTROLLERDEVICEREMOVED){
-				//close controller
+			//what kind of event
+
+			//unplugged
+			if (event->type == SDL_CONTROLLERDEVICEREMOVED)
+			{
 				SDL_GameControllerClose(controller);
 				controller = NULL;
-				return; //dont run rest of this function
+				return;
 			}
-			//IF button pressed
-			if (event->type == SDL_CONTROLLERBUTTONDOWN){
-				//Note: treats all game controllers like xbox controllers, so if user pressed X on a ps4 controller it
-				//triggers the A button press
-				if (event->cbutton.button == SDL_CONTROLLER_BUTTON_A){
-					//reset hero
-					hero->position.x = 200;
-					hero->position.y = 200;
+
+			//button pressed
+			if (event->type == SDL_CONTROLLERBUTTONDOWN)
+			{
+				//face button press
+				if (event->cbutton.button == SDL_CONTROLLER_BUTTON_A || event->cbutton.button == SDL_CONTROLLER_BUTTON_B || event->cbutton.button == SDL_CONTROLLER_BUTTON_X || event->cbutton.button == SDL_CONTROLLER_BUTTON_Y)
+				{
+					//jump
 				}
 
-				//TODO add other button presses e.g B = dodge
 			}
+
 		}
 	}
 }
 
 void GameControllerHandler::updateSticksAndDPads(){
 	if (controller != NULL && SDL_GameControllerGetAttached(controller)){
-		//reset acceleration
-		hero->acceleration.x = 0;
-		hero->acceleration.y = 0;
+		//read left stick x and y axes
+		Sint16 axisX = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX); //neg are left, pos are right
+		Sint16 axisY = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTY); //neg are up, pos are down
 
-		//read values from left sticks X and Y axes
-		Sint16 axisX = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);//-values are left, + are right
-		Sint16 axisY = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTY);//- is up, + down
-
-		//setup deadzone values, because sticks never tend to rest at 0
+		//deadzone
 		int deadzone = 10000;
 
-		//check which way sticks are being pushed
-		//LEFT or DPAD left
-		if (axisX < -deadzone || SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_LEFT))
-			hero->acceleration.x = -80;
-		//RIGHT
-		if (axisX > deadzone || SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
-			hero->acceleration.x = 80;
-		//UP
-		if (axisY < -deadzone || SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_UP))
-			hero->acceleration.y = -80;
-		//DOWN
-		if (axisY > deadzone || SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_DOWN))
-			hero->acceleration.y = 80;
+		//check stick direction
+		//Up
+		if (axisX < -deadzone || SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_UP))
+		{
+			//jump
+		}
+
 	}
 }
