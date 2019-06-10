@@ -24,6 +24,7 @@
 #include "Vector.h"
 #include "Hero.h"
 #include "Obstacle.h"
+#include "Floor.h"
 
 using namespace std;
 
@@ -89,7 +90,7 @@ int main(int argc, char** argv){
 	SDL_Surface* titleLogoSurface = SDL_LoadBMP("assets/pokemonlogo.bmp");
 	//convert surface into texture
 	SDL_Texture* titleLogoTexture = SDL_CreateTextureFromSurface(renderer, titleLogoSurface);
-	//delete surcface from memory
+	//delete surface from memory
 	SDL_FreeSurface(titleLogoSurface);
 
 	SDL_Rect sourceRect; // region we want to draw for the title, being 280x103px
@@ -114,6 +115,11 @@ int main(int argc, char** argv){
 	list<Entity*> entities;
 	//point to the list made
 	Entity::entities = &entities;
+
+	//build the floor
+	Floor* floor = new Floor();
+	floor->setRenderer(renderer);
+	floor->setXY(0, 700);
 
 	//build a hero
 	Hero* hero = new Hero();
@@ -146,15 +152,16 @@ int main(int argc, char** argv){
 	TTF_Font* font = TTF_OpenFont("assets/vermin_vibes_1989.ttf", 16);
 	SDL_Color textColour = { 123, 0, 34, 0 };
 	//create surface using font, colour, and message
-	SDL_Surface* textSurface = TTF_RenderText_Blended(font, "Not a RomHack!", textColour);
+	SDL_Surface* textSurface = TTF_RenderText_Blended(font, "Press any key to begin", textColour);
 	//convert surface to texture
 	SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
 	SDL_FreeSurface(textSurface);
 
 	//text destination
 	SDL_Rect textDestination;
-	textDestination.x = 200;
-	textDestination.y = 500; 
+	textDestination.x = 50;
+	textDestination.y = 50; 
+	SDL_QueryTexture(textTexture, NULL, NULL, &textDestination.w, &textDestination.h);
 
 	//time management
 	Uint32 lastUpdate = SDL_GetTicks();
@@ -189,12 +196,22 @@ int main(int argc, char** argv){
 			controllerHandler.update(&event);
 
 		}
+		if (controllerHandler.controller == NULL)
 			keyboardHandler.updateHeldKeys(); //check for held down keys
+		else
+			controllerHandler.updateSticksAndDPads();
 
 			//set drawing colour for renderer
 			SDL_SetRenderDrawColor(renderer, 155, 0, 155, 255);
 			//clear screen with draw colour
 			SDL_RenderClear(renderer);
+
+		//entity management
+			for each (Entity* entity in entities)
+			{
+				entity->update(DT);
+				entity->draw();
+			}
 
 			//render text on top of everything (last)
 			SDL_RenderCopy(renderer, textTexture, NULL, &textDestination);
