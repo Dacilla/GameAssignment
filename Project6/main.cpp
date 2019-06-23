@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <list>
+#include <fstream>
 
 #include "InputHandler.h"
 #include "KeyboardHandler.h"
@@ -17,7 +18,6 @@
 #include "GameControllerHandler.h"
 #include "GameState.h"
 #include "GameStateMachine.h"
-#include "IdleGameState.h"
 #include "IdleGameStates.h"
 #include "MouseHandler.h"
 #include "SoundManager.h"
@@ -25,10 +25,29 @@
 #include "Hero.h"
 #include "Obstacle.h"
 #include "Floor.h"
+#include "Score.h"
 
 using namespace std;
 
-//TODO: Create Vectors class
+int getScore(){
+	int highscore;
+	ifstream fin;
+	ofstream fout;
+	fin.open("highscore.txt", fstream::out); //opens highscore txt and if not found, creates it
+
+	// if file still can't be read, output error
+	if (!fin.good())
+		cout << "highscore.txt not found or can't be read";
+	
+	while (fin.good()) //while file is being read
+	{
+		fin >> highscore; //read the top score and insert to highscore
+	}
+	
+	fin.close();
+	fout.close();
+	return highscore;
+}
 
 int main(int argc, char** argv){
 	srand(time(NULL));
@@ -138,7 +157,24 @@ int main(int argc, char** argv){
 
 	entities.push_back(obstacle);
 
-	//setup input and keyboard handling
+	//build scoring system
+	Score* score = new Score();
+	score->setRenderer(renderer);
+	score->setXY(1000, 150);
+
+	//load music
+	Mix_Music* music = Mix_LoadMUS("assets/TASMusic.mp3");
+	if (music == NULL){
+		cout << "Music failed to load: " << Mix_GetError() << endl;
+		SDL_Quit();
+		system("pause");
+		return -1;
+	}
+
+	//Play music indefinitely
+	Mix_PlayMusic(music, -1);
+
+	//setup input and keyboard/controller handling
 	KeyboardHandler keyboardHandler;
 
 	InputHandler* inputHandler = &keyboardHandler;
@@ -149,19 +185,28 @@ int main(int argc, char** argv){
 
 
 	//Setup Text
-	TTF_Font* font = TTF_OpenFont("assets/vermin_vibes_1989.ttf", 16);
-	SDL_Color textColour = { 123, 0, 34, 0 };
+	TTF_Font* beginfont = TTF_OpenFont("assets/vermin_vibes_1989.ttf", 16);
+	SDL_Color beginColour = { 123, 0, 34, 0 };
 	//create surface using font, colour, and message
-	SDL_Surface* textSurface = TTF_RenderText_Blended(font, "Press any key to begin", textColour);
+	SDL_Surface* beginSurface = TTF_RenderText_Blended(beginfont, "Press any key to begin", beginColour);
 	//convert surface to texture
-	SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-	SDL_FreeSurface(textSurface);
+	SDL_Texture* beginTexture = SDL_CreateTextureFromSurface(renderer, beginSurface);
+	SDL_FreeSurface(beginSurface);
+
+	//Setup current high score text
+	TTF_Font* scoreFont = TTF_OpenFont("assets/BebasNeue-Regular.ttf", 16);
+	SDL_Color scoreColour = { 0, 0, 0, 60 };
+	//create surface
+	SDL_Surface* scoreSurface = TTF_RenderText_Blended(scoreFont, "1000", scoreColour);
+	//convert to texture
+	SDL_Texture* scoreTexture = SDL_CreateTextureFromSurface(renderer, scoreSurface);
+	SDL_FreeSurface(scoreSurface);
 
 	//text destination
 	SDL_Rect textDestination;
 	textDestination.x = 50;
 	textDestination.y = 50; 
-	SDL_QueryTexture(textTexture, NULL, NULL, &textDestination.w, &textDestination.h);
+	SDL_QueryTexture(beginTexture, NULL, NULL, &textDestination.w, &textDestination.h);
 
 	//time management
 	Uint32 lastUpdate = SDL_GetTicks();
@@ -188,6 +233,10 @@ int main(int argc, char** argv){
 				if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE){
 					loop = false;
 				}
+
+				if (event.key.keysym.scancode == !SDL_SCANCODE_ESCAPE){
+					
+				}
 			}
 
 			//update input handler
@@ -201,27 +250,29 @@ int main(int argc, char** argv){
 		else
 			controllerHandler.updateSticksAndDPads();
 
-			//set drawing colour for renderer
-			SDL_SetRenderDrawColor(renderer, 155, 0, 155, 255);
-			//clear screen with draw colour
-			SDL_RenderClear(renderer);
+		//set drawing colour for renderer
+		SDL_SetRenderDrawColor(renderer, 155, 0, 155, 255);
+		//clear screen with draw colour
+		SDL_RenderClear(renderer);
 
 		//entity management
-			for each (Entity* entity in entities)
-			{
-				entity->update(DT);
-				entity->draw();
-			}
+		for each (Entity* entity in entities)
+		{
+			entity->update(DT);
+			entity->draw();
+		}
 
-			//render text on top of everything (last)
-			SDL_RenderCopy(renderer, textTexture, NULL, &textDestination);
+		//render text on top of everything (last)
+		SDL_RenderCopy(renderer, beginTexture, NULL, &textDestination);
+		SDL_RenderCopy(renderer, scoreTexture, NULL, &textDestination);
 
-			//render to the screen
-			SDL_RenderPresent(renderer);			
+		//render to the screen
+		SDL_RenderPresent(renderer);			
 	}
 
 	//Clean up
-	SDL_DestroyTexture(textTexture);
+	SDL_DestroyTexture(beginTexture);
+	SDL_DestroyTexture(scoreTexture);
 	SDL_DestroyTexture(titleLogoTexture);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);

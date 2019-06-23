@@ -17,20 +17,6 @@ void Hero::setAnimation(Animation* animation){
 	this->animation = animation;
 }
 
-void Hero::shoot(){
-	Bullet* bullet = new Bullet();
-	bullet->setRenderer(renderer);
-	bullet->setXY(position.x, position.y);
-	bullet->angle = rand() % 360;//rand gives value between 0 and max int value, modulus to control it to give numbers between 0-359
-	bullet->movementSpeed = 200;//200px per second
-
-	//add to list of entities
-	Entity::entities->push_back(bullet);
-
-	SoundManager::soundManager.playSound("laser");
-}
-
-
 void Hero::update(float dt){
 	//TODO
 	//add new movement stuff
@@ -51,6 +37,7 @@ void Hero::update(float dt){
 	if (animation != NULL)
 		animation->update(dt);
 }
+
 void Hero::draw(){
 	if (animation != NULL){
 		if (faceRight)

@@ -12,9 +12,10 @@ public:
 	Score();
 	~Score();
 
-	void startScoreCount(score);
-	string getScore(score);
-
+	void startScoreCount();
+	int getScore();
+	void destroyScoreText();
+	void endScoreCount();
 	virtual void draw();
 };
 

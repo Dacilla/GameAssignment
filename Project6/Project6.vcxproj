@@ -72,7 +72,6 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Ball.cpp" />
-    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Floor.cpp" />
@@ -81,7 +80,6 @@
     <ClCompile Include="GameStateMachine.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="Hero.cpp" />
-    <ClCompile Include="IdleGameState.cpp" />
     <ClCompile Include="IdleGameStates.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="KeyboardHandler.cpp" />
@@ -97,9 +95,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Ball.h" />
-    <ClInclude Include="Bullet.h" />
     <ClInclude Include="CameraManager.h" />
-    <ClInclude Include="ChaseGameState.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameControllerHandler.h" />
@@ -107,7 +103,6 @@
     <ClInclude Include="GameStateMachine.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Hero.h" />
-    <ClInclude Include="IdleGameState.h" />
     <ClInclude Include="IdleGameStates.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="KeyboardHandler.h" />
